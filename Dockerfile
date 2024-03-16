@@ -1,7 +1,12 @@
-FROM node:latest
+FROM debian:latest
+MAINTAINER Rizwan Mohammad Khan Taslim
 
-WORKDIR /usr/src/app
+# Install nginx and adjust nginx config to stay in foreground
+RUN apt-get update && apt-get install --no-install-recommends -y nginx; \
+ echo "daemon off;" >> /etc/nginx/nginx.conf
 
-RUN npm install
+# Expose HTTP
+EXPOSE 80
 
-EXPOSE 3000
+# Start nginx
+CMD ["/usr/sbin/nginx"]
